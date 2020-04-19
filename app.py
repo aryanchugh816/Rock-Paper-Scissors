@@ -1,5 +1,6 @@
 from flask import Flask, render_template, Response
-import cv2, time
+import cv2
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -29,7 +30,7 @@ def gen():
         img = cv2.flip(img, 1)
         frame = cv2.imencode('.jpg', img)[1].tobytes()
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-        time.sleep(0.1)
+        plt.pause(0.1)
 
 
 @app.route('/video_feed')
