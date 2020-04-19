@@ -1,5 +1,5 @@
 from flask import Flask, render_template, Response
-import cv2,os
+import cv2
 import matplotlib.pyplot as plt
 port = int(os.environ.get('PORT', 5000))
 
