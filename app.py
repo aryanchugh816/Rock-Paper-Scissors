@@ -32,11 +32,11 @@ def gen():
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         plt.pause(0.1)
 
-"""
+
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
-"""
+
 
 
 
