@@ -16,27 +16,61 @@
 	height: 375px;
 	background-color: #666;
 }
+
+/* new css */
+.wrap {
+  border: solid 1px #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+#output {
+  display: inline-block;
+  top: 4px;
+  position: relative;
+  border: dotted 1px #ccc;
+  padding: 2px;
+}
+
+.button {
+  border: solid 2px #ccc;
+}
+
 </style>
 </head>
  
 <body>
 <div id="container">
 	<video autoplay="true" id="videoElement">
-	
-	</video>
+
+  </video>
+  <br/>
+  <button id="cit" onclick="shoot()" class="button">Capture</button>
+  <br/>
+  <div id="output"></div>
 </div>
+
 <script>
+var videoId = 'videoElement';
+var scaleFactor = 0.25;
+var snapshots = [];
+
 var video = document.querySelector("#videoElement");
 
 if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia({ video: true })
     .then(function (stream) {
-      video.srcObject = stream;
+      console.log(typeof(stream));
+      video.srcObject = stream;   // This stream object
     })
     .catch(function (err0r) {
       console.log("Something went wrong!");
     });
 }
+
+{% if cap == "yes" %}
+    snap_pic();
+{% endif %}
 
 function stop(e) {
   var stream = video.srcObject;
@@ -48,6 +82,46 @@ function stop(e) {
   }
 
   video.srcObject = null;
+}
+
+/* New Javascript */
+
+function capture(video, scaleFactor) {
+        if (scaleFactor == null) {
+            scaleFactor = 1;
+        }
+        var w = video.videoWidth * scaleFactor;
+        var h = video.videoHeight * scaleFactor;
+        var canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, w, h);
+        return canvas;
+    }
+
+function shoot() {
+        var video = document.getElementById(videoId);
+        var output = document.getElementById('output');
+        var canvas = capture(video, scaleFactor);
+        canvas.onclick = function() {
+            window.open(this.toDataURL(image/jpg));
+        };
+        snapshots.unshift(canvas);
+        output.innerHTML = '';
+        for (var i = 0; i < 4; i++) {
+            output.appendChild(snapshots[i]);
+        }
+    }
+
+(function() {
+  var captureit = document.getElementById('cit');
+  captureit.click();
+})();
+
+function snap_pic(){
+  var cap = document.getElementById('cit');
+  cap.click();
 }
 
 </script>
