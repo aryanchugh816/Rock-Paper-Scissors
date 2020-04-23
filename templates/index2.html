@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>Display Webcam Stream</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
  
+
 <style>
 #container {
 	margin: 0px auto;
@@ -47,6 +49,8 @@
   <br/>
   <button id="cit" onclick="shoot()" class="button">Capture</button>
   <br/>
+  <button id="new" onclick="shoot()" class="button">Send Data</button>
+  <br/>
   <div id="output"></div>
 </div>
 
@@ -67,10 +71,6 @@ if (navigator.mediaDevices.getUserMedia) {
       console.log("Something went wrong!");
     });
 }
-
-{% if cap == "yes" %}
-    snap_pic();
-{% endif %}
 
 function stop(e) {
   var stream = video.srcObject;
@@ -97,6 +97,8 @@ function capture(video, scaleFactor) {
         canvas.height = h;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(video, 0, 0, w, h);
+        var imgData = ctx.getImageData(0,0,canvas.width, canvas.height);
+        send_data(JSON.stringify(imgData));
         return canvas;
     }
 
@@ -122,6 +124,20 @@ function shoot() {
 function snap_pic(){
   var cap = document.getElementById('cit');
   cap.click();
+}
+
+function send_data(data){
+  console.log("Send Function is activated");
+  $.ajax({
+
+    url: '/receive',
+    type: 'POST',
+    dataType: 'text/plain',
+    contentType: 'application/json',
+    data: JSON.stringify(data)
+  });
+  console.log("Send Function is completed 43");
+  console.log(data);
 }
 
 </script>
