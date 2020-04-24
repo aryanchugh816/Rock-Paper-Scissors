@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import json
+import cv2,json
 import numpy as np
 
 app = Flask(__name__)
