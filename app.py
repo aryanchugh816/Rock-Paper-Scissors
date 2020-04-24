@@ -1,13 +1,11 @@
 from flask import Flask, render_template, request
-import cv2, time, json
+import json
 import numpy as np
-import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    
     return render_template("index2.html")
 
 @app.route('/receive', methods=['POST'])
