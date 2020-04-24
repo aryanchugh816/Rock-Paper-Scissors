@@ -38,6 +38,10 @@
   border: solid 2px #ccc;
 }
 
+#Counter {
+  display: none;
+}
+
 </style>
 </head>
  
@@ -49,9 +53,14 @@
   <br/>
   <button id="cit" onclick="shoot()" class="button">Capture</button>
   <br/>
-  <button id="new" onclick="shoot()" class="button">Send Data</button>
+  <button id="new" onclick="start_counter()" class="button">Send Data</button>
   <br/>
   <div id="output"></div>
+  <br>
+  <br>
+  <div id="Counter">
+    
+  </div>
 </div>
 
 <script>
@@ -132,12 +141,29 @@ function send_data(data){
 
     url: '/receive',
     type: 'POST',
-    dataType: 'text/plain',
+    dataType: 'json',
     contentType: 'application/json',
+    success: function(result) {
+      console.log("success is working");
+      console.log(result.result);
+    },
+    error: function(err){
+      console.log("error is working");
+      console.log(err);
+    },
     data: JSON.stringify(data)
   });
   console.log("Send Function is completed 43");
-  console.log(data);
+}
+
+function start_counter(){
+
+  var count_div = document.getElementById('Counter');
+  count_div.style.display = "block";
+
+  var i = 0;
+  setInterval(function(i){console.log(i);i += 1;}, 2000);
+
 }
 
 </script>

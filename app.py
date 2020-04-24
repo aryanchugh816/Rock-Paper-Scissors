@@ -23,7 +23,10 @@ def receive_data():
         print("Working 1")
         print(img.shape)
         print("Working 2")
-    return ' '
+        res = {"result": "This is a simple text returned from the function"}
+        res = json.dumps(res)
+        print(type(res))
+    return res
 
 if __name__ == "__main__":
     app.run(debug=True)
